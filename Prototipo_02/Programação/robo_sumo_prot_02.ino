@@ -27,6 +27,7 @@ int estadoSensor = 0;
 int intervalo_atual = 0;
 int intervalo_anterior = 0;
 int intervalo_roboForward = 1000;
+bool estado_roboForward = 0; // 0 para parar, 1 para andar
 
 // Configurações iniciais
 void setup() {
@@ -42,11 +43,16 @@ void loop() {
   intervalo_atual = millis();
   if (estadoSensor == 0){
     if (intervalo_atual - intervalo_anterior < intervalo_roboForward){
-      roboForward();
+      if (estado_roboForward == 0){
+        roboStop();
+      }
+      else{
+        roboForward();
+      }
     }
     else{
+      estado_roboForward = !estado_roboForward;
       intervalo_anterior = intervalo_atual;
-      roboStop();
     }
   }
   else {
