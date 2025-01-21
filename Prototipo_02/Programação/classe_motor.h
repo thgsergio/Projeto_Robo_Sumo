@@ -1,11 +1,29 @@
 class DCMotor {
+  private:
+    int speed, in1, in2;
   
   public:
-    int speed = 200, in1, in2;
 
-    DCMotor();
+    DCMotor(){
+      speed = 200;
+    }
+    DCMotor(int spd){
+      if (spd > 255){
+        speed = 255;
+      }
+      else if (spd < 0){
+        speed = 0;
+      }
+      else {
+        speed = spd;
+      }
+    }
+    DCMotor(int spd, int pin1, int pin2) : DCMotor(spd){
+      in1 = pin1;
+      in2 = pin2;
+    }
     
-    void setPin(pin1, pin2){
+    void setPin(int pin1, int pin2){
       in1 = pin1;
       in2 = pin2;
       pinMode(in1, OUTPUT);

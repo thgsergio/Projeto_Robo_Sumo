@@ -21,14 +21,38 @@ void roboLeft();
 void roboRight();
 void roboStop();
 
+// Variáveis importantes
+int estadoSensor = 0;
+
+int intervalo_atual = 0;
+int intervalo_anterior = 0;
+int intervalo_roboForward = 1000;
+
+// Configurações iniciais
 void setup() {
   motor1.setPin(MOTOR_A1, MOTOR_A2);
   motor2.setPin(MOTOR_B1, MOTOR_B2);
-
+  pinMode(ECHO, INPUT);
+  pinMode(TRIGGER, OUTPUT);
+  pinMode(pino_sensor, INPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  estadoSensor = digitalRead(pino_sensor);
+  intervalo_atual = millis();
+  if (estadoSensor == 0){
+    if (intervalo_atual - intervalo_anterior < intervalo_roboForward){
+      roboForward();
+    }
+    else{
+      intervalo_anterior = intervalo_atual;
+      roboStop();
+    }
+  }
+  else {
+
+  }
+
 
 }
 
