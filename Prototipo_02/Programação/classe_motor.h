@@ -30,6 +30,10 @@ class DCMotor {
       pinMode(in2, OUTPUT);
     }
 
+    int getSpeed(){
+      return speed;
+    }
+
     void setSpeed(int spd){
       if (spd > 255){
         speed = 255;

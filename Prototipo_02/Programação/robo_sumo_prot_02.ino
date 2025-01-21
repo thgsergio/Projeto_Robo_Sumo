@@ -27,7 +27,10 @@ int estadoSensor = 0;
 int intervalo_atual = 0;
 int intervalo_anterior = 0;
 int intervalo_roboForward = 1000;
-bool estado_roboForward = 0; // 0 para parar, 1 para andar
+
+int intervalo_roboSearch = 1000;
+bool estado_roboSearch = 0; // 0 para não girar, 1 para girar
+int direcao_roboSearch = 0; // 0 para esquerda, 1 e 2 para direita, 3 para esquerda
 
 // Configurações iniciais
 void setup() {
@@ -41,22 +44,49 @@ void setup() {
 void loop() {
   estadoSensor = digitalRead(pino_sensor);
   intervalo_atual = millis();
-  if (estadoSensor == 0){
-    if (intervalo_atual - intervalo_anterior < intervalo_roboForward){
-      if (estado_roboForward == 0){
-        roboStop();
-      }
-      else{
+
+  if (estadoSensor == 0){ // Enquanto o robô não vê a linha da arena...
+
+    if (motor1.getSpeed() != 120){
+      roboSetSpeed(120);
+    }
+
+    if (estado_roboSearch == 0){ // Enquanto o robô não estiver girando...
+      if (intervalo_atual - intervalo_anterior < intervalo_roboForward){ // Ir para frente
         roboForward();
       }
+      else{
+        estado_roboSearch = 1;
+        intervalo_anterior = intervalo_atual;
+      }
     }
-    else{
-      estado_roboForward = !estado_roboForward;
-      intervalo_anterior = intervalo_atual;
+    else { // Enquanto o robô gira...
+      if (intervalo_atual - intervalo_anterior < intervalo_roboSearch){
+        switch(direcao_roboSearch){
+          case 0:
+          case 3:
+            roboLeft();
+            break;
+          case 1:
+          case 2:
+            roboRight();
+            break;
+        }
+      }
+      else {
+        direcao_roboSearch++;
+        intervalo_anterior =  intervalo_atual;
+        if (direcao_roboSearch > 3){
+          estado_roboSearch = 0;
+        }
+      }
     }
   }
-  else {
-
+  else { // Identificou a linha: marcha ré e meia volta
+    roboBackward();
+    delay(1000);
+    roboLeft();
+    delay(1000);
   }
 
 
