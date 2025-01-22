@@ -24,6 +24,8 @@ void roboStop();
 // Variáveis importantes
 int estadoSensor = 0;
 
+int distancia_oponente = 0;
+
 int intervalo_atual = 0;
 int intervalo_anterior = 0;
 int intervalo_roboForward = 1000;
@@ -45,39 +47,58 @@ void loop() {
   estadoSensor = digitalRead(pino_sensor);
   intervalo_atual = millis();
 
+// Sensor ultrassônico
+  digitalWrite(TRIGGER, HIGH);
+  delayMicroseconds(20);
+  digitalWrite(TRIGGER, LOW);
+  distancia_oponente = (pulseIn(ECHO, HIGH)) * (0.034 / 2);
+
   if (estadoSensor == 0){ // Enquanto o robô não vê a linha da arena...
+    
+    if(distancia_oponente <= 50){
+      
+      if(motor1.getSpeed() != 250){
+        roboSetSpeed(250);
+      }
 
-    if (motor1.getSpeed() != 120){
-      roboSetSpeed(120);
-    }
-
-    if (estado_roboSearch == 0){ // Enquanto o robô não estiver girando...
-      if (intervalo_atual - intervalo_anterior < intervalo_roboForward){ // Ir para frente
+      while (estadoSensor != 1){
         roboForward();
       }
-      else{
-        estado_roboSearch = 1;
-        intervalo_anterior = intervalo_atual;
-      }
+
     }
-    else { // Enquanto o robô gira...
-      if (intervalo_atual - intervalo_anterior < intervalo_roboSearch){
-        switch(direcao_roboSearch){
-          case 0:
-          case 3:
-            roboLeft();
-            break;
-          case 1:
-          case 2:
-            roboRight();
-            break;
+    else {
+      if (motor1.getSpeed() != 120){
+        roboSetSpeed(120);
+      }
+
+      if (estado_roboSearch == 0){ // Enquanto o robô não estiver girando...
+        if (intervalo_atual - intervalo_anterior < intervalo_roboForward){ // Ir para frente
+          roboForward();
+        }
+        else{
+          estado_roboSearch = 1;
+          intervalo_anterior = intervalo_atual;
         }
       }
-      else {
-        direcao_roboSearch++;
-        intervalo_anterior =  intervalo_atual;
-        if (direcao_roboSearch > 3){
-          estado_roboSearch = 0;
+      else { // Enquanto o robô gira...
+        if (intervalo_atual - intervalo_anterior < intervalo_roboSearch){
+          switch(direcao_roboSearch){
+            case 0:
+            case 3:
+              roboLeft();
+              break;
+            case 1:
+            case 2:
+              roboRight();
+              break;
+          }
+        }
+        else {
+          direcao_roboSearch++;
+          intervalo_anterior =  intervalo_atual;
+          if (direcao_roboSearch > 3){
+            estado_roboSearch = 0;
+          }
         }
       }
     }
@@ -88,8 +109,6 @@ void loop() {
     roboLeft();
     delay(1000);
   }
-
-
 }
 
 // Definição das funções de movimentação do robô
