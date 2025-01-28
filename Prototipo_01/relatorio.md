@@ -23,3 +23,4 @@ Os procedimentos metodológicos usados para a composição dessa pesquisa baseia
 4. *Encaixes entre as peças*: para meios de sustentação, os encaixes *devem* ser modificados, pois seus tamanhos são os mesmos, o que impossibilita que as peças de fato encaixem-se umas nas outras. Deve-se haver uma diferença de tamanho entre o encaixe "macho" e  o encaixe "fêmea" para o encaixe ser bem sucedido.
     1. OBS (Tamanho): pequenas variações de tamanho geram o risco de os encaixes ficarem tão frouxos ao ponto de as peças saírem facilmente. Nesse caso, deve-se aplicar certa preciso nas medições *ou* deve-se alterar a forma com a qual as peças se encaixam umas nas outras.
 5. *Proporções do protótipo*: para meios de montagem, o atual protótipo aparenta ser pequeno demais para portar a quantidade de equipamentos de hardware usados no projeto.
+
