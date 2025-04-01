@@ -20,19 +20,20 @@ void roboBackward();
 void roboLeft();
 void roboRight();
 void roboStop();
+void roboProcura();
 
 // Variáveis importantes
 int estadoSensor = 0;
 
 int distancia_oponente = 0;
+ 
+// int intervalo_atual = 0;
+// int intervalo_anterior = 0;
+// int intervalo_roboForward = 1000;
 
-int intervalo_atual = 0;
-int intervalo_anterior = 0;
-int intervalo_roboForward = 1000;
-
-int intervalo_roboSearch = 1000;
-bool estado_roboSearch = 0; // 0 para não girar, 1 para girar
-int direcao_roboSearch = 0; // 0 para esquerda, 1 e 2 para direita, 3 para esquerda
+// int intervalo_roboSearch = 1000;
+// bool estado_roboSearch = 0; // 0 para não girar, 1 para girar
+// int direcao_roboSearch = 0; // 0 para esquerda, 1 e 2 para direita, 3 para esquerda
 
 // Configurações iniciais
 void setup() {
@@ -45,7 +46,7 @@ void setup() {
 
 void loop() {
   estadoSensor = digitalRead(pino_sensor);
-  intervalo_atual = millis();
+  //intervalo_atual = millis();
 
 // Sensor ultrassônico
   digitalWrite(TRIGGER, HIGH);
@@ -56,10 +57,7 @@ void loop() {
   if (estadoSensor == 0){ // Enquanto o robô não vê a linha da arena...
     
     if(distancia_oponente <= 50){
-      
-      if(motor1.getSpeed() != 250){
         roboSetSpeed(250);
-      }
 
       while (estadoSensor != 1){
         roboForward();
@@ -67,42 +65,15 @@ void loop() {
 
     }
     else {
-      if (motor1.getSpeed() != 120){
-        roboSetSpeed(120);
-      }
 
-      if (estado_roboSearch == 0){ // Enquanto o robô não estiver girando...
-        if (intervalo_atual - intervalo_anterior < intervalo_roboForward){ // Ir para frente
-          roboForward();
-        }
-        else{
-          estado_roboSearch = 1;
-          intervalo_anterior = intervalo_atual;
-        }
-      }
-      else { // Enquanto o robô gira...
-        if (intervalo_atual - intervalo_anterior < intervalo_roboSearch){
-          switch(direcao_roboSearch){
-            case 0:
-            case 3:
-              roboLeft();
-              break;
-            case 1:
-            case 2:
-              roboRight();
-              break;
-          }
-        }
-        else {
-          direcao_roboSearch++;
-          intervalo_anterior =  intervalo_atual;
-          if (direcao_roboSearch > 3){
-            estado_roboSearch = 0;
-          }
-        }
-      }
+      roboSetSpeed(120);
+
+      // Procurar robô adversário
+      roboProcura();
+
     }
   }
+
   else { // Identificou a linha: marcha ré e meia volta
     roboBackward();
     delay(1000);
@@ -140,4 +111,11 @@ void roboRight(){
 void roboStop(){
   motor1.stop();
   motor2.stop();
+}
+
+void roboProcura(){
+  roboForward();
+  delay(300);
+  roboLeft();
+  delay(300);
 }
