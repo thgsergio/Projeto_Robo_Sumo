@@ -42,6 +42,8 @@ void setup() {
   pinMode(ECHO, INPUT);
   pinMode(TRIGGER, OUTPUT);
   pinMode(pino_sensor, INPUT);
+  // Debug:
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -54,12 +56,20 @@ void loop() {
   digitalWrite(TRIGGER, LOW);
   distancia_oponente = (pulseIn(ECHO, HIGH)) * (0.034 / 2);
 
+// Código para debugs
+  Serial.print("Ultrassonic: ");
+  Serial.println(distancia_oponente);
+
+  Serial.print("Line sensor: ");
+  Serial.println(estadoSensor);
+
   if (estadoSensor == 0){ // Enquanto o robô não vê a linha da arena...
     
     if(distancia_oponente <= 50){
         roboSetSpeed(250);
 
       while (estadoSensor != 1){
+        estadoSensor = digitalRead(pino_sensor);
         roboForward();
       }
 
