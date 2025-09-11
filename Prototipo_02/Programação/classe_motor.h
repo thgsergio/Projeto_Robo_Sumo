@@ -1,9 +1,13 @@
+#ifndef CLASSE_MOTOR_H
+#define CLASSE_MOTOR_H
+
 class DCMotor {
   private:
     int speed, in1, in2;
   
   public:
 
+    // ============= Inicialização do Objeto =============
     DCMotor(){
       speed = 200;
     }
@@ -18,11 +22,17 @@ class DCMotor {
         speed = spd;
       }
     }
+    DCMotor(int pin1, int pin2) : DCMotor(){
+      in1 = pin1;
+      in2 = pin2;
+    }
     DCMotor(int spd, int pin1, int pin2) : DCMotor(spd){
       in1 = pin1;
       in2 = pin2;
     }
-    
+    // ===================================================
+
+    // Funções principais
     void setPin(int pin1, int pin2){
       in1 = pin1;
       in2 = pin2;
@@ -62,3 +72,4 @@ class DCMotor {
     }
 };
 
+#endif

@@ -24,16 +24,7 @@ void roboProcura();
 
 // Variáveis importantes
 int estadoSensor = 0;
-
 int distancia_oponente = 0;
- 
-// int intervalo_atual = 0;
-// int intervalo_anterior = 0;
-// int intervalo_roboForward = 1000;
-
-// int intervalo_roboSearch = 1000;
-// bool estado_roboSearch = 0; // 0 para não girar, 1 para girar
-// int direcao_roboSearch = 0; // 0 para esquerda, 1 e 2 para direita, 3 para esquerda
 
 // Configurações iniciais
 void setup() {
