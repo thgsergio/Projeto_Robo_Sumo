@@ -11,6 +11,12 @@ Ei, sabe aquelas competições de sumô que ocorrem nos ringues entre duas pesso
 
 ## Conceito
 
-O Projeto Robô-Sumô é um projeto de extensão fornecido pela Universidade Federal da Paraíba (UFPB).
+O Projeto Robô-Sumô é um projeto de extensão fornecido pela Universidade Federal da Paraíba (UFPB).  Orientador: Prof. Dr. Ruy Alberto Pisani Altafim
 
-Meu objetivo com esse repositório é compartilhar os arquivos de modelagem 3D que eu estarei construindo para chegar a um modelo estrutural simples e eficiente que facilite sua montagem, pois o nosso foco é que o projeto seja utilizado no setor escolar para ensino de robótica.
+Esse repositório contém arquivos de modelagem 3D do robô-sumo construído. Os principais pontos focados no desenvolvimento do modelo consistem em atingir um modelo estrutural simples e barato que facilite a montagem do robô e que, ao mesmo tempo, ele possa se movimentar de forma eficiente para empurrar seus adversários para fora da arena. 
+
+Um dos focos do projeto é utilizar o esse robô no setor escolar para o ensino de robótica, expandindo essa temática para escolas onde o acesso a essa tecnologia não é tão abrangente quanto em regiões mais desenvolvidas.
+
+Além disso, outro foco do projeto é construir robôs-sumôs para serem usados em competições de robótica, seja em âmbito local, regional ou nacional.
+
+No mais, espero que se divirta no desenvolvimento do seu próprio robô!
